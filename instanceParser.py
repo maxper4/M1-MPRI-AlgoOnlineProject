@@ -89,7 +89,10 @@ class Algo:
         if instance is not None:
             self.instance = instance
             self.technicians = [(0, 0) for i in range(instance.k)]
-
+        else:
+            self.technicians = []
+            self.instance = None
+            
         self.step = 0
         self.distance = 0
 

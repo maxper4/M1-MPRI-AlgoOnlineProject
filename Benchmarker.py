@@ -33,4 +33,4 @@ def benchmark(algo, isRandom=False):
     print("\n")
 
     moy = sum(ratios) / len(ratios)
-    print("Moyenne du benchmark: " + str(moy))
+    print("Moyenne du benchmark: " + str(moy) + " %")
