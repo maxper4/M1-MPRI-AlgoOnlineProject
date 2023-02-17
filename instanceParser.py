@@ -31,6 +31,7 @@ class Instance:
         print("Optimal: " + str(self.optimal))
         print("Algo result: " + str(algo.distance))
         print("Ratio: " + str((self.optimal / algo.distance) * 100) + "%")
+        print("Rapport: " + str(algo.distance / self.optimal))
 
     # Runs the given algorithm on the instance and returns its result
     def run(self, algo, draw=False):
@@ -87,7 +88,7 @@ class Algo:
     def __init__(self, instance):
         self.instance = instance
         self.step = 0
-        self.technicians = [(0, (i+1)*10) for i in range(instance.k)]
+        self.technicians = [(0, 0) for i in range(instance.k)]
         self.distance = 0
 
     # Simulates the next step of the algorithm
@@ -107,3 +108,5 @@ class Algo:
     # Returns the current positions of the technicians
     def getOffsets(self):
         return self.technicians
+    
+
