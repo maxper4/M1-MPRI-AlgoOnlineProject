@@ -1,5 +1,5 @@
 from instanceParser import Instance, Algo, np
-
+from Benchmarker import benchmark
 
 class FullRandom(Algo):
     # Implementation of the algorithm, returns a random technician
@@ -39,16 +39,34 @@ class Periodic(Algo): # Optimal quand la periode est inferieure au nombre de tec
             ]
         )
 
+class RandomClosest(Algo):
+    def doStep(self, site):
+        # Dans un premier temps, on verifie si le site est deja couvert
+        for tech in self.technicians:
+            if abs(site[0] - tech[0]) + abs(site[1] - tech[1]) == 0:
+                return self.technicians.index(tech)
 
-instance = Instance("instances/instance_N200_OPT221.inst")
-print("FullRandom")
-algo = FullRandom(instance)
-instance.run(algo, draw=False)
-print("\n\n\n")
-print("Closest")
-algo = Closest(instance)
-instance.run(algo, draw=False)
-print("\n\n\n")
-print("Periodic")
-algo = Periodic(instance)
-instance.run(algo, draw=False)
+        # Si le site n'est pas couvert, on sort un technicien aleatoire
+        return np.random.randint(0, self.instance.k)
+
+
+#instance = Instance("instances/instance_N200_OPT221.inst")
+#print("FullRandom")
+#algo = FullRandom(instance)
+#instance.run(algo, draw=False)
+#print("\n\n\n")
+#print("Closest")
+#algo = Closest(instance)
+#instance.run(algo, draw=False)
+#print("\n\n\n")
+#print("Periodic")
+#algo = Periodic(instance)
+#instance.run(algo, draw=False)
+
+#print("\n\n\n")
+#print("RandomClosest")
+#algo = RandomClosest(instance)
+#instance.run(algo, draw=False)
+
+algo = Periodic(None)
+benchmark(algo, isRandom=False)

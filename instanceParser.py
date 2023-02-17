@@ -86,9 +86,11 @@ class Algo:
 
     # Constructor, stores the data associated with an algorithm in an object
     def __init__(self, instance):
-        self.instance = instance
+        if instance is not None:
+            self.instance = instance
+            self.technicians = [(0, 0) for i in range(instance.k)]
+
         self.step = 0
-        self.technicians = [(0, 0) for i in range(instance.k)]
         self.distance = 0
 
     # Simulates the next step of the algorithm
@@ -109,4 +111,8 @@ class Algo:
     def getOffsets(self):
         return self.technicians
     
-
+    def reset(self, instance):
+        self.instance = instance
+        self.step = 0
+        self.technicians = [(0, 0) for i in range(instance.k)]
+        self.distance = 0
