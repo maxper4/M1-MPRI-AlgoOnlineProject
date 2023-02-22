@@ -1,12 +1,13 @@
 from instanceParser import Instance, Algo, np
 from Benchmarker import benchmark
 
+# score: 15.67
 class FullRandom(Algo):
     # Implementation of the algorithm, returns a random technician
     def doStep(self, site):
         return np.random.randint(0, self.instance.k)
 
-
+# score: 35.21
 class Closest(Algo):
     # Implementation of the algorithm, returns the closest technician
     def doStep(self, site):
@@ -17,7 +18,7 @@ class Closest(Algo):
             ]
         )
 
-
+# score: 92.48
 class Periodic(Algo): # Optimal quand la periode est inferieure au nombre de techniciens
     def doStep(self, site):
 
@@ -39,6 +40,7 @@ class Periodic(Algo): # Optimal quand la periode est inferieure au nombre de tec
             ]
         )
 
+# score: 67.33
 class PeriodicRandom(Algo):
     def doStep(self, site):
 
@@ -55,6 +57,7 @@ class PeriodicRandom(Algo):
         # Si tous les techniciens sont en deplacement, on retourne le plus proche du site
         return np.random.randint(0, self.instance.k)
 
+# score: 64.70
 class WeightedRandom(Algo):
     # Implementation of the algorithm, returns a random technician weighted by the distance to the site (the closer the more likely)
     def doStep(self, site):
@@ -71,6 +74,7 @@ class WeightedRandom(Algo):
         p = [i / sumP for i in p]
         return np.random.choice(range(len(self.technicians)), p=p)
 
+# score: 60.31
 class RandomClosest(Algo):
     def doStep(self, site):
         # Dans un premier temps, on verifie si le site est deja couvert
@@ -81,6 +85,7 @@ class RandomClosest(Algo):
         # Si le site n'est pas couvert, on sort un technicien aleatoire
         return np.random.randint(0, self.instance.k)
 
+# score: 15.80
 class MaxCoverage(Algo):
     # Try to maximize the coverage of the sites (spread the technicians as much as possible)
     def doStep(self, site):
@@ -97,28 +102,3 @@ class MaxCoverage(Algo):
             dist.append(d)
 
         return np.argmax(dist)
-
-#instance = Instance("instances/instance_N200_OPT221.inst")
-#print("FullRandom")
-#algo = FullRandom(instance)
-#instance.run(algo, draw=False)
-#print("\n\n\n")
-#print("Closest")
-#algo = Closest(instance)
-#instance.run(algo, draw=False)
-#print("\n\n\n")
-#print("Periodic")
-#algo = Periodic(instance)
-#instance.run(algo, draw=False)
-
-#print("\n\n\n")
-#print("RandomClosest")
-#algo = RandomClosest(instance)
-#instance.run(algo, draw=False)
-
-#instance = Instance("instances/instance_N200_OPT221.inst")
-#algo = MaxCoverage(instance)
-#instance.run(algo, draw=True)
-
-algo = Periodic(None)
-benchmark(algo, isRandom=False)
