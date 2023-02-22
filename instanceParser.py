@@ -58,9 +58,10 @@ class Instance:
             plt.scatter([x[0] for x in self.sites], [x[1] for x in self.sites], s=30)
             scatter = plt.scatter([x[0] for x in algo.technicians], [x[1] for x in algo.technicians], s=5)
 
+            # Animation function.  This is called sequentially
             def update(frame_number):
-                algo.nextStep()
-                scatter.set_offsets(algo.getOffsets())
+                algo.nextStep()                             # Simulate next step
+                scatter.set_offsets(algo.getOffsets())      # Update the positions of the technicians
 
                 if frame_number == len(self.demands) - 2:
                     self.printResult(algo)
@@ -70,6 +71,7 @@ class Instance:
             animation = FuncAnimation(fig, update, interval=100, frames=(len(self.demands) - 1), repeat=False)
             plt.show()
             
+            # If the animation is not finished, run the rest of the algorithm
             if algo.step < len(self.demands) - 1:
                 for i in range(len(self.demands) - algo.step):
                     algo.nextStep()

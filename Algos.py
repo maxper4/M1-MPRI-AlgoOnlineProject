@@ -56,6 +56,7 @@ class PeriodicRandom(Algo):
         return np.random.randint(0, self.instance.k)
 
 class WeightedRandom(Algo):
+    # Implementation of the algorithm, returns a random technician weighted by the distance to the site (the closer the more likely)
     def doStep(self, site):
         dist = [
                 abs(site[0] - tech[0]) + abs(site[1] - tech[1])
@@ -81,6 +82,7 @@ class RandomClosest(Algo):
         return np.random.randint(0, self.instance.k)
 
 class MaxCoverage(Algo):
+    # Try to maximize the coverage of the sites (spread the technicians as much as possible)
     def doStep(self, site):
         dist = []
         for tech in range(len(self.technicians)):
