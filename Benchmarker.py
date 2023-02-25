@@ -1,8 +1,10 @@
 from os import listdir
 from os.path import isfile, join
 from instanceParser import Instance
+from scipy.stats import norm, stats
 
 sampleSize = 100    # Number of samples for the random algorithm
+confidence = 0.95   # standard deviation confidence
 
 # Benchmark the algorithm on all available instances
 def benchmark(algo, isRandom=False):
@@ -18,20 +20,29 @@ def benchmark(algo, isRandom=False):
                 instance.run(algo)
                 sample.append(algo.distance)
             sampleMoy = sum(sample) / sampleSize
-            results.append((sampleMoy, instance.optimal))
+            (lower_bound, upper_bound) = norm.interval(confidence, loc=sampleMoy, scale= stats.sem(sample))
+            results.append((sampleMoy, lower_bound, upper_bound, instance.optimal))
     else:
         for instance in instances:
             algo.reset(instance)
             instance.run(algo)
-            results.append((algo.distance, instance.optimal))
+            results.append((algo.distance, algo.distance, algo.distance, instance.optimal))
             print("\n")
     
     print(results)
     print("\n")
 
-    ratios = [(optimal / dist) * 100 for (dist, optimal) in results]
+    ratios = [dist / optimal for (dist, lower, upper, optimal) in results]
     print(ratios)
     print("\n")
 
     moy = sum(ratios) / len(ratios)
-    print("Moyenne du benchmark: " + str(moy) + " %")
+    print("Moyenne du benchmark: " + str(moy))
+
+    lowers = [lower / optimal for (dist, lower, upper, optimal) in results]
+    uppers = [upper / optimal for (dist, lower, upper, optimal) in results]
+
+    lowerMoy = sum(lowers) / len(lowers)
+    upperMoy = sum(uppers) / len(uppers)
+
+    print("Intervalle de confiance: [" + str(lowerMoy) + ", " + str(upperMoy) + "]")

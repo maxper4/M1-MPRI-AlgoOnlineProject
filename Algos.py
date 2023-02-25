@@ -109,3 +109,12 @@ class MaxCoverage(Algo):
             dist.append(d)
 
         return np.argmax(dist)
+
+# start specific instance
+#instance = Instance("instances/instance_N200_OPT221.inst")
+#algo = Periodic(instance)
+#instance.run(algo, draw=False)
+
+# benchmark all instances
+algo = FullRandom(None)
+benchmark(algo, isRandom=True)
