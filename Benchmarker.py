@@ -20,8 +20,12 @@ def benchmark(algo, isRandom=False):
                 instance.run(algo)
                 sample.append(algo.distance)
             sampleMoy = sum(sample) / sampleSize
-            (lower_bound, upper_bound) = norm.interval(confidence, loc=sampleMoy, scale= stats.sem(sample))
-            results.append((sampleMoy, lower_bound, upper_bound, instance.optimal))
+            sem = stats.sem(sample)
+            if sem == 0:
+                results.append((sampleMoy, sampleMoy, sampleMoy, instance.optimal))
+            else:
+                (lower_bound, upper_bound) = norm.interval(confidence, loc=sampleMoy, scale= stats.sem(sample))
+                results.append((sampleMoy, lower_bound, upper_bound, instance.optimal))
     else:
         for instance in instances:
             algo.reset(instance)
