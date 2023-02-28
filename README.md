@@ -1,5 +1,5 @@
 # Algo Online Project
-1 week project of Probabilistic algorithms and Games theory. 
+1 week school project of Probabilistic algorithms and Games theory. 
 
 The goal is to solve the problem of k-servers which can be described as follows:
 - k mobile technicians (servers), {s1, s2, . . . , sk}, provide maintenance service to n customers,
